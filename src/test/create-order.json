@@ -1,0 +1,31 @@
+{
+  "orderItems": [
+    {
+      "productId": "2",
+      "quantity": "2",
+      "sizes": "1",
+      "colors": "1",
+      "userId": "2"
+    }
+  ],
+  "user" :
+  {
+    "username": "username",
+    "firstName": "Petar",
+    "lastName": "Petrov",
+    "email": "petar@mail.bg",
+    "phoneNumber": "123456789",
+    "address": "address 21",
+    "country": "BG",
+    "city": "SS",
+    "zip": "7500"
+  }
+,
+  "total": "159.5",
+
+  "status": "NEW",
+  "paymentType": "ON_DELIVERY",
+  "deliveryType": "SPEEDY",
+  "created": "2024-07-25 12:02:41.752884",
+  "modified": "2024-07-27 12:02:41.752884"
+}
