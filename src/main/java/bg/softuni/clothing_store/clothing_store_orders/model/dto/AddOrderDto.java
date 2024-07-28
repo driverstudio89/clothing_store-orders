@@ -4,11 +4,13 @@ import bg.softuni.clothing_store.clothing_store_orders.model.entity.OrderItem;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.DeliveryType;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.PaymentType;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.StatusType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -17,21 +19,19 @@ import java.util.List;
 @NoArgsConstructor
 public class AddOrderDto {
 
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItemsRest;
 
     private BigDecimal total;
-
-    private StatusType status;
 
     private PaymentType paymentType;
 
     private DeliveryType deliveryType;
 
-    private String created;
+//    private LocalDateTime created;
+//
+//    private LocalDateTime modified;
 
-    private String modified;
-
-    private long userId;
+    private Long user;
 
     private String firstName;
 

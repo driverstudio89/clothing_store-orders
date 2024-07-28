@@ -3,11 +3,14 @@ package bg.softuni.clothing_store.clothing_store_orders.model.entity;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.DeliveryType;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.PaymentType;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.StatusType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +25,10 @@ public class Order {
     private Long id;
 
     @OneToMany(targetEntity = OrderItem.class)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItemsRest;
 
     @Column(nullable = false)
     private BigDecimal total;
-
-    @Column(nullable = false)
-    private String Address;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -43,16 +43,40 @@ public class Order {
     private DeliveryType deliveryType;
 
     @Column(nullable = false)
-    private String created;
+    private LocalDateTime created;
 
     @Column(nullable = false)
-    private String modified;
+    private LocalDateTime modified;
 
     @Column
-    private long userId;
+    private Long user;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    @Email
+    private String email;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String Address;
+
+    @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
+    private String city;
+    @Column(nullable = false)
+    private String zip;
 
     public Order() {
-        this.orderItems = new ArrayList<>();
+        this.orderItemsRest = new ArrayList<>();
     }
 
 

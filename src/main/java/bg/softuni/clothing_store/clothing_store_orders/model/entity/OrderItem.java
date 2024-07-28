@@ -33,8 +33,8 @@ public class OrderItem {
     @Column(nullable = false)
     private long userId;
 
-    @ManyToOne(targetEntity = Order.class)
-    private Order order;
+//    @ManyToOne(targetEntity = Order.class)
+//    private Order order;
 
     public OrderItem() {
     }
