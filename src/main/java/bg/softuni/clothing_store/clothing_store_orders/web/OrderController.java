@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,18 +25,27 @@ public class OrderController {
 
 
     @GetMapping("/administration/orders/all-orders")
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
+    public ResponseEntity<List<OrderDto>> getAllOrders(
+            @RequestParam(required = false) LocalDate created,
+            @RequestParam(required = false) StatusType statusType) {
+        if (created != null && statusType != null) {
+            return ResponseEntity.ok(orderService.getAllOrders(created, statusType));
+
+        }
+        if (created != null) {
+            return ResponseEntity.ok(orderService.getAllOrders(created));
+
+        }
+
+        if (statusType != null) {
+            return ResponseEntity.ok(orderService.getAllOrders(statusType));
+
+        }
         return ResponseEntity.ok(
                 orderService.getAllOrders()
         );
     }
 
-//    @GetMapping("/all-orders")
-//    public ResponseEntity<List<OrderDto>> getAllOrders(LocalDate created) {
-//        return ResponseEntity.ok(
-//                orderService.getAllOrders()
-//        );
-//    }
 
     @PostMapping("/administration/orders/add-order")
     public ResponseEntity<OrderDto> addOrder(@RequestBody AddOrderDto addOrderDto) {
@@ -67,7 +77,7 @@ public class OrderController {
     }
 
 
-    @DeleteMapping("/administration/orders/{id}")
+    @DeleteMapping("/users/orders/delete/{id}")
     public ResponseEntity<OrderDto> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.ok().build();

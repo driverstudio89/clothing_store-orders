@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,13 +42,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> getAllOrders(StatusType statusType, LocalDateTime created) {
-        List<Order> orders = orderRepository.findAllByStatusAndCreated(statusType, created);
-        return mapOrdersToDto(orders);
-    }
-
-    @Override
-    @Transactional
     public List<OrderDto> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return mapOrdersToDto(orders);
@@ -55,11 +49,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> getAllOrders(LocalDateTime created) {
-        return mapOrdersToDto(orderRepository.findAllByCreated(created));
+    public List<OrderDto> getAllOrders(LocalDate created, StatusType statusType) {
+        LocalDateTime dayBegin = created.atTime(0, 0, 0);
+        LocalDateTime dayEnd = created.atTime(23, 59, 59);
+        List<Order> orders = orderRepository.findAllByCreatedIsBetweenAndStatus(dayBegin, dayEnd, statusType);
+        return mapOrdersToDto(orders);
     }
 
+    @Override
+    @Transactional
+    public List<OrderDto> getAllOrders(LocalDate created) {
+        LocalDateTime dayBegin = created.atTime(0, 0, 0);
+        LocalDateTime dayEnd = created.atTime(23, 59, 59);
+        return mapOrdersToDto(orderRepository.findAllByCreatedIsBetween(dayBegin, dayEnd));
+    }
 
+    @Override
+    @Transactional
+    public List<OrderDto> getAllOrders(StatusType statusType) {
+        return mapOrdersToDto(orderRepository.findAllByStatus(statusType));
+    }
 
     @Override
     public void deleteOrder(Long orderId) {

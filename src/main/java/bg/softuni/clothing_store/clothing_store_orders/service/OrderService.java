@@ -7,6 +7,7 @@ import bg.softuni.clothing_store.clothing_store_orders.model.dto.OrderDto;
 import bg.softuni.clothing_store.clothing_store_orders.model.entity.enums.StatusType;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,12 +15,13 @@ import java.util.List;
 public interface OrderService {
     void createOrder(AddOrderDto addOrderDto);
 
-    List<OrderDto> getAllOrders(StatusType statusType, LocalDateTime created);
-
     List<OrderDto> getAllOrders();
 
-    @Transactional
-    List<OrderDto> getAllOrders(LocalDateTime created);
+    List<OrderDto> getAllOrders(LocalDate created);
+
+    List<OrderDto> getAllOrders(StatusType statusType);
+
+    List<OrderDto> getAllOrders(LocalDate created, StatusType statusType);
 
     void deleteOrder(Long orderId);
 
